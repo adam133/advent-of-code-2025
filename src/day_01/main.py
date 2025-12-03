@@ -2,7 +2,7 @@ from dial import Dial
 from parse import parse_file_to_turns
 
 def main():
-    turns = parse_file_to_turns('day-01/data/input.txt')
+    turns = parse_file_to_turns('src/day-01/data/input.txt')
     dial = Dial(100, start_position=50)
     for direction, ticks in turns:
         dial.turn(direction, ticks)
