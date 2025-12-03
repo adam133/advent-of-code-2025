@@ -25,9 +25,14 @@ def identify_invalid_ids_in_range(range_check: Range) -> list[int]:
         n_str = str(n)
         n_str_len = len(n_str)
         first_half = n_str[:n_str_len // 2]
-        second_half = n_str[n_str_len // 2:]
-        if first_half == second_half:
-            invalid_ids.append(n)
+        for i in range(1, len(first_half) + 1):
+            # check how many times the substring appears in the number
+            if n_str.count(first_half) >= 2:
+                invalid_ids.append(n)
+                break
+            else:
+                # remove the last character from the first half and try again
+                first_half = first_half[:-1]
     return invalid_ids
 
 def sum_nums(num_list: list[int]) -> int:
