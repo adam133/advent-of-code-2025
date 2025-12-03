@@ -8,22 +8,28 @@ class Dial:
     def check_for_zero(self) -> bool:
         return self.current_position == 0
     
-    def _turn_dial(self, ticks: int) -> int:
-        # Get absolute value of ticks to handle large turns
-        # If over 100 ticks, count how many times we pass zero
-        passes = abs(ticks) // self.positions
-        self.times_past_zero += passes
+    def _check_position(self):
+        # Wrap around the dial if necessary
+        if self.current_position < 0:
+            # negative wrap to positions - 1
+            self.current_position = self.positions - 1
+        elif self.current_position >= self.positions:
+            # positive wrap to 0
+            self.current_position = 0
+            self.times_past_zero += 1
+        elif self.current_position == 0:
+            # Increment the count of times passed zero
+            self.times_past_zero += 1
 
-        if ticks < 0:
-            remaining_ticks_to_move = ticks + (passes * self.positions)
-        else:
-            remaining_ticks_to_move = ticks - (passes * self.positions)
-        print(f"Turning dial by {ticks} ticks from {self.current_position}, remaining {remaining_ticks_to_move}, times past zero: {self.times_past_zero}.")
-        if remaining_ticks_to_move != 0:
-            if (remaining_ticks_to_move + self.current_position) >= self.positions or (remaining_ticks_to_move + self.current_position) <= 0:
-                self.times_past_zero += 1
-                print(f"Passed zero during this turn. {remaining_ticks_to_move} ticks from position {self.current_position}.")
-        self.current_position = (self.current_position + remaining_ticks_to_move) % self.positions
+    def _turn_dial(self, ticks: int) -> int:
+        while ticks != 0:
+            if ticks > 0:
+                self.current_position += 1
+                ticks -= 1
+            else:
+                self.current_position -= 1
+                ticks += 1
+            self._check_position()
 
     def turn(self, direction: str, ticks: int):
         if direction == 'L':

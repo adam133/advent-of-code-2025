@@ -70,4 +70,4 @@ def test_more_turns(dial_fixture):
     assert dial.times_past_zero == 4
     dial.turn('R', 1050)
     assert dial.current_position == 45
-    assert dial.times_past_zero == 13
+    assert dial.times_past_zero == 15
