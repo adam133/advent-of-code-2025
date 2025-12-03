@@ -1,4 +1,4 @@
-from src.dial import Dial
+from day_01.dial import Dial
 from pytest import fixture
 
 @fixture

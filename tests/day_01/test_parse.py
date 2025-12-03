@@ -1,5 +1,4 @@
-from src.parse import parse_file_to_turns, parse_list_to_turns, parse_input_as_list
-from pytest import fixture
+from day_01.parse import parse_file_to_turns, parse_list_to_turns, parse_input_as_list
 
 
 def sample_data():
