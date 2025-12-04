@@ -17,22 +17,19 @@ def parse_string_to_ranges(input_string):
     return range_objects
 
 def identify_invalid_ids_in_range(range_check: Range) -> list[int]:
+    # invalid IDs are if it is made only of some sequence of digits repeated at least twice
     nums_to_check = [n for n in range(range_check.start, range_check.end + 1)]
     invalid_ids = []
     for n in nums_to_check:
-        # for each number, convert to string, split in half, 
-        # check if first half matches second half
         n_str = str(n)
-        n_str_len = len(n_str)
-        first_half = n_str[:n_str_len // 2]
-        for i in range(1, len(first_half) + 1):
-            # check how many times the substring appears in the number
-            if n_str.count(first_half) >= 2:
+        # split string in half, check if both halves are the same
+        len_str = len(n_str)
+        check_str = n_str[:len_str // 2]
+        while len(check_str) > 0:
+            if check_str * (len_str // len(check_str)) == n_str:
                 invalid_ids.append(n)
                 break
-            else:
-                # remove the last character from the first half and try again
-                first_half = first_half[:-1]
+            check_str = check_str[:-1]
     return invalid_ids
 
 def sum_nums(num_list: list[int]) -> int:

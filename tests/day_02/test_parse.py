@@ -31,7 +31,7 @@ def test_identify_invalid_ids_in_no_invalid_range():
 def test_identify_invalid_ids_in_larger_range():
     range = Range(100, 200)
     invalid_ids = identify_invalid_ids_in_range(range)
-    expected_invalid_ids = []
+    expected_invalid_ids = [111]
     assert invalid_ids == expected_invalid_ids
 
 def test_identify_invalid_ids_in_4_digit_range():
