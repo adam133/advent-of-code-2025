@@ -52,3 +52,43 @@ def test_get_obstacles_and_count_accessible_items_complex():
     # Manually count accessible items based on the obstacle rule
     grid.print_accessible_grid()
     assert accessible_count == 11
+
+def test_update_item_type():
+    grid = create_grid_from_input_list(simple_input)
+    item = next(i for i in grid.items if i.x == 2 and i.y == 2)  # item at (2, 2)
+    assert item.type == "."
+    grid.update_item_type(item, "@")
+    assert item.type == "@"
+    grid.get_obstacles()
+    assert item.accessible == True
+    assert grid.count_accessible_items() == 5
+
+
+def test_remove_accessible_items():
+    grid = create_grid_from_input_list(simple_input)
+    grid.get_obstacles()
+    initial_accessible_count = grid.count_accessible_items()
+    removed_count = grid.remove_accessible_items()
+    assert removed_count == initial_accessible_count
+    # After removal, count accessible items again
+    grid.get_obstacles()
+    new_accessible_count = grid.count_accessible_items()
+    assert new_accessible_count == 0
+
+def test_remove_accessible_items_complex():
+    grid = create_grid_from_input_list(complex_input)
+    grid.get_obstacles()
+    initial_accessible_count = grid.count_accessible_items()
+    removed_count = grid.remove_accessible_items()
+    assert removed_count == initial_accessible_count
+    assert initial_accessible_count == 11
+    # After removal, count accessible items again
+    grid.get_obstacles()
+    new_accessible_count = grid.count_accessible_items()
+    assert new_accessible_count == 1
+    # One more removal:
+    removed_2_count = grid.remove_accessible_items()
+    grid.get_obstacles()
+    assert removed_2_count == new_accessible_count
+    final_accessible_count = grid.count_accessible_items()
+    assert final_accessible_count == 1
