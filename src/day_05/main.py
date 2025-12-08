@@ -21,5 +21,10 @@ def main():
     print(f"Total valid items: {fresh_count}")
     print(f"Total invalid items: {spoiled_count}")
 
+    print("Cleaning ID ranges for part 2...")
+    parser.clean_ranges()
+    total_valid_ids = parser.count_valid_items()
+    print(f"Total valid item IDs after cleaning ranges: {total_valid_ids}")
+
 if __name__ == "__main__":
     main()

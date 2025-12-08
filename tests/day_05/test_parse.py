@@ -28,3 +28,14 @@ def test_is_item_valid():
     assert parser.is_item_valid(4) is False
     assert parser.is_item_valid(6) is True
     assert parser.is_item_valid(8) is False
+
+def test_clean_ranges():
+    parser = Parser()
+    parser.id_ranges = [(1, 3), (2, 5), (10, 15), (14, 20), (25, 30), (30, 31)]
+    parser.clean_ranges()
+    assert parser.id_ranges == [(1, 5), (10, 20), (25, 31)]
+
+def test_count_valid_items():
+    parser = Parser()
+    parser.id_ranges = [(1, 3), (5, 7), (10, 15)]
+    assert parser.count_valid_items() == 3 + 3 + 6

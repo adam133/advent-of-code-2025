@@ -24,3 +24,24 @@ class Parser:
             if start <= item_id <= end:
                 return True
         return False
+
+    def clean_ranges(self):
+        self.id_ranges.sort()
+        cleaned_ranges = []
+        current_start, current_end = self.id_ranges[0]
+        for start, end in self.id_ranges[1:]:
+            # Check for overlap or adjacency
+            if start <= current_end + 1:
+                current_end = max(current_end, end)
+            else:
+                # No overlap, add the current range and start a new one
+                cleaned_ranges.append((current_start, current_end))
+                current_start, current_end = start, end
+        cleaned_ranges.append((current_start, current_end))
+        self.id_ranges = cleaned_ranges
+    
+    def count_valid_items(self) -> int:
+        valid_count = 0
+        for range_start, range_end in self.id_ranges:
+            valid_count += (range_end - range_start + 1)
+        return valid_count
