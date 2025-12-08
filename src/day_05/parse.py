@@ -18,3 +18,9 @@ class Parser:
                 self.id_ranges.append((start, end))
             elif line.isdigit():
                 self.items.append(int(line))
+
+    def is_item_valid(self, item_id: int) -> bool:
+        for start, end in self.id_ranges:
+            if start <= item_id <= end:
+                return True
+        return False
